@@ -36,7 +36,6 @@ public class AdminController {
 	public String login( Admin admin, Model model, HttpSession session, HttpServletRequest request) {
 		// 通过账号和密码查询用户
 
-		admin.setA_password(MD5Util.MD5EncodeUtf8(admin.getA_password()));
 		Admin ad = adminService.findAdmin(admin);
 		if(ad!=null){
 			session.setAttribute("admin", ad);

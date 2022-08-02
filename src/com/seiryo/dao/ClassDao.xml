@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seiryo.dao.ClassDao" >
+
+
+    <!--分页查询-->
+    <select id="getClassList" parameterType="Clazz" resultType="Clazz">
+        select * from d_class
+        <where>
+            <if test="c_classname!=null and c_classname!='' ">
+                and  c_classname like  '%${c_classname}%'
+            </if>
+            <if test="c_counsellor!=null and c_counsellor!=''">
+                and  c_counsellor like  '%${c_counsellor}%'
+            </if>
+            <if test="c_classid!=null and c_classid!=''">
+                and  c_classid like  '%${c_classid}%'
+            </if>
+        </where>
+        ORDER BY  c_classid asc
+        limit #{currentPage},#{pageSize}
+    </select>
+    <!--查询数据总数-->
+    <select id="totalCount"  resultType="Integer">
+        select count(c_id) from d_class
+        <where>
+            <if test="c_classname!=null and c_classname!='' ">
+                and  c_classname like  '%${c_classname}%'
+            </if>
+            <if test="c_id!=null and c_id!=0">
+                and  c_id like  '%${c_id}%'
+            </if>
+        </where>
+    </select>
+
+    <!--添加管理员信息-->
+    <insert id="addClass" parameterType="Clazz" keyProperty="c_id" useGeneratedKeys="true">
+        insert into d_class ( c_id,c_classid,c_classname,c_counsellor)
+        values(#{c_id},#{c_classid},#{c_classname},#{c_counsellor})
+    </insert>
+
+    <!--通过id删除管理员信息-->
+    <delete id="deleteClass" parameterType="Integer" >
+        delete from d_class where c_id=#{c_id}
+    </delete>
+
+    <select id="findClassById"  parameterType="Integer" resultType="Clazz" >
+        select * from d_clazz where c_id=#{c_id}
+    </select>
+
+    <select id="getAll" resultType="Clazz">
+        select * from d_class;
+    </select>
+
+    <!--修改管理员信息-->
+    <update id="updateClass" parameterType="Clazz">
+        update d_class
+        <set>
+            <if test="c_classid!=null and c_classid !=''">
+                c_classid=#{c_classid},
+            </if>
+            <if test="c_classname !=null and c_classname !=''">
+                c_classname=#{c_classname},
+            </if>
+            <if test="c_counsellor !=null and c_counsellor !=''">
+                c_counsellor=#{c_counsellor},
+            </if>
+
+        </set>
+        where c_id = #{c_id}
+    </update>
+</mapper>
