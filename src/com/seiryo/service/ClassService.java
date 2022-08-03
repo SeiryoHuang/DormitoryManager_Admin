@@ -17,4 +17,5 @@ public interface ClassService {
     public int updateClass(Clazz clazz); //修改管理员信息
     public Clazz findClassById(Integer c_id);
     public List<Clazz> getAll();
+    public List<Clazz> findClassByNI(String c_classname, String c_classid);
 }

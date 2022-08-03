@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Service("classService")
+@Service("ClassService")
 @Transactional
 public class ClassServiceImpl implements ClassService {
     @Autowired
@@ -62,5 +62,10 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<Clazz> getAll() {
         return classDao.getAll();
+    }
+
+    @Override
+    public List<Clazz> findClassByNI(String c_classname, String c_classid) {
+        return classDao.findClassByNI(c_classname,c_classid);
     }
 }

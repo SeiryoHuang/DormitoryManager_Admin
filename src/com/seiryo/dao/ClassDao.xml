@@ -21,6 +21,18 @@
         ORDER BY  c_classid asc
         limit #{currentPage},#{pageSize}
     </select>
+    <select id="findClassByNI" parameterType="Clazz" resultType="Clazz">
+        select * from d_class
+        <where>
+            <if test="c_classname!=null and c_classname!='' ">
+                and  c_classname like  '%${c_classname}%'
+            </if>
+            <if test="c_classid!=null and c_classid!=''">
+                and  c_classid like  '%${c_classid}%'
+            </if>
+        </where>
+
+    </select>
     <!--查询数据总数-->
     <select id="totalCount"  resultType="Integer">
         select count(c_id) from d_class
@@ -48,6 +60,7 @@
     <select id="findClassById"  parameterType="Integer" resultType="Clazz" >
         select * from d_clazz where c_id=#{c_id}
     </select>
+
 
     <select id="getAll" resultType="Clazz">
         select * from d_class;
