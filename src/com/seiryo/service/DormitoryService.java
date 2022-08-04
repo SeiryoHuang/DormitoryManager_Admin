@@ -18,6 +18,8 @@ public interface DormitoryService {
 
 	//分页查询
 	public PageInfo<Dormitory> findPageInfo(String d_dormbuilding,String a_name, Integer s_dormitoryid, Integer pageIndex, Integer pageSize);
+	//分页查询人员信息
+	public List<Dormitory> findStu(Integer s_dormitoryid);
 
 	public int addDormitory(Dormitory dormitory);    //添加宿舍信息
 	public int deleteDormitory(Integer d_id);   //删除宿舍信息

@@ -21,6 +21,10 @@ public interface DormitoryDao {
     //获取用户列表
     public List<Dormitory> getDormitoryList(@Param("d_dormbuilding") String d_dormbuilding, @Param("a_name") String a_name, @Param("s_dormitoryid") Integer s_dormitoryid, @Param("currentPage") Integer currentPage, @Param("pageSize") Integer pageSize);
 
+    //获取人员用户列表
+    public List<Dormitory> getDormitoryStuList(@Param("s_dormitoryid") Integer s_dormitoryid);
+
+
     public int addDormitory(Dormitory dormitory);    //添加宿舍信息
     public int deleteDormitory(Integer d_id);   //删除宿舍信息
     public int updateDormitory(Dormitory dormitory); //修改宿舍信息

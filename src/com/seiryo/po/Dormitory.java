@@ -1,5 +1,7 @@
 package com.seiryo.po;
 
+import java.util.List;
+
 public class Dormitory {
     private Integer d_id;
     private Integer s_dormitoryid;
@@ -7,6 +9,7 @@ public class Dormitory {
     private String d_bedtotal;
     private String d_bed;
     private String a_name;
+    private List<Student> students;
 
     public Integer getD_id() {
         return d_id;
@@ -54,5 +57,13 @@ public class Dormitory {
 
     public void setA_name(String a_name) {
         this.a_name = a_name;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

@@ -54,6 +54,12 @@ public class DormitoryServiceImpl implements DormitoryService {
 		}
 		return pi;
 	}
+	//获取人员信息
+	@Override
+	public List<Dormitory> findStu(Integer s_dormitoryid) {
+			List<Dormitory> dormitoryStuList =	dormitoryDao.getDormitoryStuList(s_dormitoryid);
+			return dormitoryStuList;
+	}
 
 	//添加宿舍信息
 	@Override

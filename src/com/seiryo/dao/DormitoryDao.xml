@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seiryo.dao.DormitoryDao" >
+    <resultMap type="com.seiryo.po.Dormitory" id="cardAndInfo2">
+        <id property="d_id" column="d_id"/>
+        <result property="s_dormitoryid" column="s_dormitoryid"/>
+        <result property="d_dormbuilding" column="d_dormbuilding"/>
+        <result property="d_bedtotal" column="d_bedtotal"/>
+        <result property="d_bed" column="d_bed"/>
+        <result property="a_name" column="a_name"/>
+        <collection property="students" ofType="com.seiryo.po.Student" javaType="ArrayList">
+            <id property="s_id" column="s_id"/>
+            <result property="s_studentid" column="s_studentid"/>
+            <result property="s_name" column="s_name"/>
+            <result property="s_sex" column="s_sex"/>
+            <result property="s_age" column="s_age"/>
+            <result property="s_phone" column="s_phone"/>
+            <result property="s_classid" column="s_classid"/>
+            <result property="s_classname" column="s_classname"/>
+            <result property="s_dormitoryid" column="s_dormitoryid"/>
+        </collection>
+    </resultMap>
 
     <!--登陆查询-->
     <select id="findDormitory" parameterType="Dormitory" resultType="Dormitory">
@@ -46,6 +65,25 @@
                 and  a_name like  '%${a_name}%'
             </if>
         </where>
+    </select>
+    <!--登陆查询人员信息-->
+    <select id="findDormitoryStudent" parameterType="Dormitory" resultMap="cardAndInfo2">
+        select dormitoryinfos.*,students.* from d_dormitoryinfo dormitoryinfos join d_student students on dormitoryinfos.s_dormitoryid=students.s_dormitoryid
+        where
+        <if test="s_dormitoryid!=null and s_dormitoryid!=0">
+            and  s_dormitoryid like  '%${s_dormitoryid}%'
+        </if>
+    </select>
+
+    <!--分页查询人员信息-->
+    <select id="getDormitoryStuList" resultMap="cardAndInfo2">
+        select dormitoryinfos.*,students.* from d_dormitoryinfo dormitoryinfos join d_student students on dormitoryinfos.s_dormitoryid=students.s_dormitoryid
+        <where>
+            <if test="s_dormitoryid!=null and s_dormitoryid!=0">
+                and  dormitoryinfos.s_dormitoryid like  '%${s_dormitoryid}%'
+            </if>
+        </where>
+        ORDER BY  d_id asc
     </select>
 
     <!--添加宿舍信息-->

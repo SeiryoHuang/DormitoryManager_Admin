@@ -38,11 +38,20 @@ public class DormitoryController {
         model.addAttribute("di",di);
         return "dormitory_list";
     }
+    /**
+     * 分页查询人员信息
+     */
+    @RequestMapping(value = "/findDormitoryStudent")
+    public String findDormitoryStudent(Integer s_dormitoryid , Model model) {
+        List<Dormitory> ds = dormitoryService.findStu(s_dormitoryid);
+        model.addAttribute("ds",ds);
+        return "dormitory_Studentlist";
+    }
 
     /**
      * 导出Excel
      */
-    @RequestMapping(value = "/exportDormitorylist" , method = RequestMethod.POST)
+    @RequestMapping(value = "/exportdormitorylist" , method = RequestMethod.POST)
     @ResponseBody
     public List<Dormitory> exportDormitory(){
         List<Dormitory> dormitory = dormitoryService.getAll();
@@ -56,7 +65,6 @@ public class DormitoryController {
     @ResponseBody
     public String addDormitory( @RequestBody Dormitory dormitory) {
 
-        //dormitory.setA_password(MD5Util.MD5EncodeUtf8(dormitory.getA_password()));
         int a = dormitoryService.addDormitory(dormitory);
         return "dormitory_list";
     }
