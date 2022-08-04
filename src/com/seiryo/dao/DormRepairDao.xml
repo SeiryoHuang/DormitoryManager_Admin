@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seiryo.dao.DormRepairDao" >
+
+    <!--登陆查询-->
+    <select id="findDormRepair" parameterType="DormRepair" resultType="DormRepair">
+        select * from d_dormrepair
+        where
+        <if test="d_id!=null and d_id!=0">
+            and  d_id like  '%${d_id}%'
+        </if>
+        <if test="d_dormbuilding!=null and d_dormbuilding!=''">
+            and  d_dormbuilding like  '%${d_dormbuilding}%'
+        </if>
+    </select>
+
+    <!--分页查询-->
+    <select id="getDormRepairList" parameterType="DormRepair" resultType="DormRepair">
+        select * from d_dormrepair
+        <where>
+            <if test="d_id!=null and d_id!=0">
+                and  d_id like  '%${d_id}%'
+            </if>
+            <if test="d_dormbuilding!=null and d_dormbuilding!=''">
+                and  d_dormbuilding like  '%${d_dormbuilding}%'
+            </if>
+        </where>
+        ORDER BY  r_id asc
+        limit #{currentPage},#{pageSize}
+    </select>
+    <!--查询数据总数-->
+    <select id="totalCount"  resultType="Integer">
+        select count(r_id) from d_dormrepair
+        <where>
+            <if test="d_id!=null and d_id!=0 ">
+                and  d_id like  '%${d_id}%'
+            </if>
+            <if test="d_dormbuilding!=null and d_dormbuilding!=''">
+                and  d_dormbuilding like  '%${d_dormbuilding}%'
+            </if>
+        </where>
+    </select>
+
+    <!--添加宿舍信息-->
+    <insert id="addDormRepair" parameterType="DormRepair" keyProperty="d_id" useGeneratedKeys="true">
+        insert into d_dormrepair (d_id,d_dormbuilding,r_name,reason)
+        values(#{d_id},#{s_dormitoryid},#{r_name},#{reason})
+    </insert>
+
+    <!--通过id删除宿舍信息-->
+    <delete id="deleteDormRepair" parameterType="Integer" >
+        delete from d_dormrepair where r_id=#{r_id}
+    </delete>
+
+    <select id="findDormRepairById"  parameterType="Integer" resultType="DormRepair" >
+        select * from d_dormrepair where r_id=#{r_id}
+    </select>
+
+    <select id="getAll" resultType="DormRepair">
+        select * from d_dormrepair;
+    </select>
+
+    <!--修改宿舍信息-->
+    <update id="updateDormRepair" parameterType="DormRepair">
+        update d_dormrepair
+        <set>
+            <if test="d_id!=null and d_id !=''">
+                d_id=#{d_id},
+            </if>
+            <if test="d_dormbuilding !=null and d_dormbuilding !=''">
+                d_dormbuilding=#{d_dormbuilding},
+            </if>
+            <if test="r_name !=null and r_name !=''">
+                r_name=#{r_name},
+            </if>
+            <if test="reason !=null and reason !=0">
+                reason=#{reason},
+            </if>
+        </set>
+        where r_id = #{r_id}
+    </update>
+</mapper>
